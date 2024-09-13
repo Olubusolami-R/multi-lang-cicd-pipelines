@@ -21,9 +21,11 @@ jobs:
           distribution: 'temurin'
 
       - name: Build and test
+        working-directory: cicd-java
         run: mvn clean install
 
       - name: Publish to GitHub Packages
+        working-directory: cicd-java
         run: mvn deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
