@@ -2,3 +2,28 @@ name: Build and Publish Libraries
 
 on:
   push:
+
+jobs:
+  build-and-publish-java:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write  # Write access for publishing to GitHub Packages
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build and test
+        run: mvn clean install
+
+      - name: Publish to GitHub Packages
+        run: mvn deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
