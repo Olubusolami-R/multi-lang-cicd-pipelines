@@ -49,7 +49,7 @@ jobs:
         working-directory: cicd-java
         id: current_version
         run: |
-          current_version=${mvn help:evaluate -Dexpression=project.version -q -DforceStdout}
+          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "current_version=$current_version" >> $GITHUB_ENV
 
       - name: Echo the current version
