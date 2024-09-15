@@ -1,18 +1,38 @@
 name: Build and Publish Libraries
 
 on:
-  push:
+  inputs:
+        language:
+          description: 'Select the programming language'
+          required: true
+          type: choice
+          options:
+            - Python
+            - JavaScript
+            - Go
+            - Java
+        versionType:
+          description: 'Version type to increment'
+          required: true
+          type: choice
+          options:
+            - major
+            - minor
+            - patch
+          default: minor
 
 jobs:
   build-and-publish-java:
     runs-on: ubuntu-latest
+    if: ${{ github.events.inputs.language=='Java' }}
 
     permissions:
       contents: read
       packages: write  # Write access for publishing to GitHub Packages
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -20,26 +40,44 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build and test
+      - name: Get current version
         working-directory: cicd-java
-        run: mvn clean install
+        id: current_version
+        run: |
+          current_version=${mvn help:evaluate -Dexpression=project.version -q -DforceStdout}
+          echo "::set-output name=current_version::$current_version"
 
-      - name: Publish to GitHub Packages
-        working-directory: cicd-java
-        run: mvn deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Increment Java version
+      #   working-directory: cicd-java
+        
+      # - name: Update the version
+      #   working-directory: cicd-java
+      
+      # - name: Configure git
+      #   working-directory: cicd-java
+      
+      # - name: Tag this version
+      #   working-directory: cicd-java
 
-      - name: Create GitHub release
-        if: success()
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}  # Use the current tag (e.g., v1.0.0)
-          release_name: Release ${{ github.ref }}  # Customize release name
-          body: |
-            ## Changes
-            - Release of Java-${{ github.ref }}
-          draft: false
-          prerelease: false
+      # - name: Commit changes
+      #   working-directory: cicd-java
+
+      # - name: Build and Publish to GitHub Packages
+      #   working-directory: cicd-java
+      #   run: mvn clean install deploy
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      # - name: Create GitHub release
+      #   if: success()
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}  # Use the current tag (e.g., v1.0.0)
+      #     release_name: Release ${{ github.ref }}  # Customize release name
+      #     body: |
+      #       ## Changes
+      #       - Release of Java-${{ github.ref }}
+      #     draft: false
+      #     prerelease: false
