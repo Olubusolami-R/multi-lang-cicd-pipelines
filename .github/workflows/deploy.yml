@@ -45,12 +45,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # - name: Get current version
-      #   working-directory: cicd-java
-      #   id: current_version
-      #   run: |
-      #     current_version=${mvn help:evaluate -Dexpression=project.version -q -DforceStdout}
-      #     echo "::set-output name=current_version::$current_version"
+      - name: Get current version
+        working-directory: cicd-java
+        id: current_version
+        run: |
+          current_version=${mvn help:evaluate -Dexpression=project.version -q -DforceStdout}
+          echo "::set-output name=current_version::$current_version"
 
       # - name: Increment Java version
       #   working-directory: cicd-java
