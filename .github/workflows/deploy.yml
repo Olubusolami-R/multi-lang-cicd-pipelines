@@ -39,11 +39,11 @@ jobs:
         run: |
           echo The entered value ${{github.events.inputs.language}}
 
-      # - name: Set up Java
-      #   uses: actions/setup-java@v4
-      #   with:
-      #     java-version: '17'
-      #     distribution: 'temurin'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
       # - name: Get current version
       #   working-directory: cicd-java
