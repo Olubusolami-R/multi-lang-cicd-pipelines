@@ -50,7 +50,10 @@ jobs:
         id: current_version
         run: |
           current_version=${mvn help:evaluate -Dexpression=project.version -q -DforceStdout}
-          echo "::set-output name=current_version::$current_version"
+          echo "current_version=$current_version" >> $GITHUB_ENV
+
+      - name: Echo the current version
+        run: echo "The current version is ${{ env.current_version }}"
 
       # - name: Increment Java version
       #   working-directory: cicd-java
