@@ -109,7 +109,7 @@ jobs:
         run: |
           git add pom.xml
           git commit -m "Bump Java version to ${{ env.NEW_VERSION }}"
-          echo "TAG=learn-${{github.event.inputs.language}}" >> $GITHUB_ENV
+          echo "TAG=learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}}" >> $GITHUB_ENV
           git tag -a learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
           git push origin HEAD --tags
 
