@@ -79,6 +79,9 @@ jobs:
           new_version="$major.$minor.$patch"
           echo "new_version=$new_version" >> $GITHUB_ENV
         
+      - name: Echo the current version
+        run: echo "The new version is ${{ env.new_version }}"
+
       # - name: Update the version
       #   working-directory: cicd-java
       
