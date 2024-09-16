@@ -28,7 +28,7 @@ jobs:
     if: ${{ github.event.inputs.language=='Java'}}
 
     permissions:
-      contents: read
+      contents: write
       packages: write  # Write access for publishing to GitHub Packages
 
     steps:
@@ -109,7 +109,7 @@ jobs:
         run: |
           git add pom.xml
           git commit -m "Bump Java version to ${{ env.NEW_VERSION }}"
-          git tag -a clutta-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
+          git tag -a learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
           git push origin HEAD --tags
 
       # - name: Build and Publish to GitHub Packages
