@@ -53,7 +53,7 @@ jobs:
           echo "CURRENT_VERSION=$current_version" >> $GITHUB_ENV
 
       - name: Echo the current version
-        run: echo "The current version is ${{ env.CURRENT_VERSION }}"
+        run: echo "The current version of cicd-java is ${{ env.CURRENT_VERSION }}"
 
       - name: Increment Java version
         working-directory: cicd-java
@@ -132,3 +132,31 @@ jobs:
             - Release of ${{ env.TAG }}
           draft: false
           prerelease: false
+  
+  build-and-publish-javascript:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.language=='JavaScript'}}
+
+    permissions:
+      contents: write
+      packages: write  
+
+    steps:
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Get current version
+        working-directory: cicd-js
+        id: get_current_version
+        run: |
+          current_version=$(node -p "require('./package.json').version")
+          echo "CURRENT_VERSION=$current_version" >> $GITHUB_ENV
+      
+      - name: Echo the current version
+        run: echo "The current version of cicd-js is ${{ env.CURRENT_VERSION }}"
+
