@@ -202,5 +202,5 @@ jobs:
           latest_version=$(node -p "require('./package.json').version")
           echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
       
-      
-
+      - name: Echo the new version again
+        run: echo "The new version from package.json is ${{ env.LATEST_VERSION }}"
