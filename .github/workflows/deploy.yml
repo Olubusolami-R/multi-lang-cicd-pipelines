@@ -55,8 +55,29 @@ jobs:
       - name: Echo the current version
         run: echo "The current version is ${{ env.current_version }}"
 
-      # - name: Increment Java version
-      #   working-directory: cicd-java
+      - name: Increment Java version
+        working-directory: cicd-java
+        run: |
+          version="${{ env.current_version }}"
+          IFS '.' read -r major minor patch <<< "$version" 
+
+          case "${{ github.event.inputs.versionType}}" in
+            major)
+              major=$(major+1)
+              minor=0
+              patch=0
+              ;;
+            minor)
+              minor=$(minor+1)
+              patch=0
+              ;;
+            patch)
+              patch=$(patch+1)
+              ;;
+          esac
+
+          new_version="$major.$minor.$patch"
+          echo "new_version=$new_version" >> $GITHUB_ENV
         
       # - name: Update the version
       #   working-directory: cicd-java
