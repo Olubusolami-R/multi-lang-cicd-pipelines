@@ -112,11 +112,11 @@ jobs:
           git tag -a learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
           git push origin HEAD --tags
 
-      # - name: Build and Publish to GitHub Packages
-      #   working-directory: cicd-java
-      #   run: mvn clean install deploy
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Publish to GitHub Packages
+        working-directory: cicd-java
+        run: mvn clean install deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       # - name: Create GitHub release
       #   if: success()
