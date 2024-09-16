@@ -94,8 +94,10 @@ jobs:
         run: |
           latest_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
-          echo "The latest version set in pom.xml is ${{ env.LATEST_VERSION }}"
-          
+
+      - name: Echo the new version again
+        run: echo "The new version from pom.xml is ${{ env.LATEST_VERSION }}"
+
       # - name: Configure git
       #   working-directory: cicd-java
       
