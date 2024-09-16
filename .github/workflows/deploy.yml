@@ -109,6 +109,7 @@ jobs:
         run: |
           git add pom.xml
           git commit -m "Bump Java version to ${{ env.NEW_VERSION }}"
+          echo "TAG=learn-${{github.event.inputs.language}}" >> $GITHUB_ENV
           git tag -a learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
           git push origin HEAD --tags
 
@@ -124,10 +125,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}  # Use the current tag (e.g., v1.0.0)
-          release_name: Release ${{ github.ref }}  # Customize release name
+          tag_name: ${{ env.TAG }}  # Use the current tag (e.g., v1.0.0)
+          release_name: Release ${{ env.TAG }}  # Customize release name
           body: |
             ## Changes
-            - Release of Java-${{ github.ref }}
+            - Release of ${{ env.TAG }}
           draft: false
           prerelease: false
