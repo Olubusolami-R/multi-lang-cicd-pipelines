@@ -59,7 +59,7 @@ jobs:
         working-directory: cicd-java
         run: |
           version="${{ env.current_version }}"
-          IFS '.' read -r major minor patch <<< "$version" 
+          IFS='.' read -r major minor patch <<< "$version" 
 
           case "${{ github.event.inputs.versionType}}" in
             major)
