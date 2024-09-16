@@ -1,17 +1,16 @@
 {
   "name": "cicd_javascript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "Tester.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-      "type": "git",
-      "url": "https://maven.pkg.github.com/Olubusolami-R/cicd_for_packages"
+    "type": "git",
+    "url": "https://maven.pkg.github.com/Olubusolami-R/cicd_for_packages"
   },
   "keywords": [],
   "author": "Olubusolami Sogunle",
   "license": "MIT"
-
 }
