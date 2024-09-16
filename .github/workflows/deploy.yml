@@ -148,11 +148,12 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '20.x'
+          registry-url: 'https://npm.pkg.github.com'
       
       - name: Install dependencies
         working-directory: cicd-js
-        run: npm install
+        run: npm ci
       
       - name: Get current version
         working-directory: cicd-js
@@ -218,4 +219,24 @@ jobs:
           echo "TAG=learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}}" >> $GITHUB_ENV
           git tag -a learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
           git push origin HEAD --tags
+        
+      # - name: Build and Publish to GitHub Packages
+      #   working-directory: cicd-js
+      #   run: npm publish
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      # - name: Create GitHub release
+      #   if: success()
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ env.TAG }}  
+      #     release_name: Release ${{ env.TAG }}
+      #     body: |
+      #       ## Changes
+      #       - Release of ${{ env.TAG }}
+          draft: false
+          prerelease: false
       
