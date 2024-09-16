@@ -104,11 +104,13 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
         
-      # - name: Tag this version
-      #   working-directory: cicd-java
-
-      # - name: Commit changes
-      #   working-directory: cicd-java
+      - name: Tag and Commit changes
+        working-directory: cicd-java
+        run: |
+          git add pom.xml
+          git commit -m "Bump Java version to ${{ env.NEW_VERSION }}"
+          git tag -a clutta-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
+          git push origin HEAD --tags
 
       # - name: Build and Publish to GitHub Packages
       #   working-directory: cicd-java
