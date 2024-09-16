@@ -98,9 +98,12 @@ jobs:
       - name: Echo the new version again
         run: echo "The new version from pom.xml is ${{ env.LATEST_VERSION }}"
 
-      # - name: Configure git
-      #   working-directory: cicd-java
-      
+      - name: Configure git
+        working-directory: cicd-java
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+        
       # - name: Tag this version
       #   working-directory: cicd-java
 
