@@ -86,15 +86,15 @@ jobs:
       - name: Update the version in pom.xml
         working-directory: cicd-java
         run: |
-          mvn versions:set -DnewVersion=${{ env.NEW_VERSION }} -X
+          mvn versions:set -DnewVersion=${{ env.NEW_VERSION }}
       
-      # - name: Check new version
-      #   working-directory: cicd-java
-      #   id: check_new
-      #   run: |
-      #     latest_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-      #     echo "latest_version=$latest_version" >> $GITHUB_ENV
-      #     echo "The latest version set in pom.xml is ${{ env.latest_version }}"
+      - name: Check new version
+        working-directory: cicd-java
+        id: check_new
+        run: |
+          latest_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
+          echo "The latest version set in pom.xml is ${{ env.LATEST_VERSION }}"
           
       # - name: Configure git
       #   working-directory: cicd-java
