@@ -212,8 +212,8 @@ jobs:
       - name: Tag and Commit changes
         working-directory: cicd-java
         run: |
-          git add package.json
-          git add package-lock.json
+          git add ./package.json
+          git add ./package-lock.json
           git commit -m "Bump Javascript version to ${{ env.NEW_VERSION }}"
           echo "TAG=learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}}" >> $GITHUB_ENV
           git tag -a learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
