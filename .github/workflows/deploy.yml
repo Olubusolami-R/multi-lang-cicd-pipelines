@@ -201,6 +201,21 @@ jobs:
         run: |
           latest_version=$(node -p "require('./package.json').version")
           echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
+          echo "The new version from package.json is ${{ env.LATEST_VERSION }}"
+
+      - name: Configure git
+        working-directory: cicd-java
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+        
+      - name: Tag and Commit changes
+        working-directory: cicd-java
+        run: |
+          git add package.json
+          git add package-lock.json
+          git commit -m "Bump Javascript version to ${{ env.NEW_VERSION }}"
+          echo "TAG=learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}}" >> $GITHUB_ENV
+          git tag -a learn-${{github.event.inputs.language}}-v${{env.NEW_VERSION}} -m "Release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
+          git push origin HEAD --tags
       
-      - name: Echo the new version again
-        run: echo "The new version from package.json is ${{ env.LATEST_VERSION }}"
