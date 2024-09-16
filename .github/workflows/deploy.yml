@@ -50,15 +50,16 @@ jobs:
         id: get_current_version
         run: |
           current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "current_version=$current_version" >> $GITHUB_ENV
+          echo "CURRENT_VERSION=$current_version" >> $GITHUB_ENV
 
       - name: Echo the current version
-        run: echo "The current version is ${{ env.current_version }}"
+        run: echo "The current version is ${{ env.CURRENT_VERSION }}"
 
       - name: Increment Java version
         working-directory: cicd-java
+        id: increment_java_version
         run: |
-          version="${{ env.current_version }}"
+          version="${{ env.CURRENT_VERSION }}"
           IFS='.' read -r major minor patch <<< "$version" 
 
           case "${{ github.event.inputs.versionType}}" in
@@ -77,23 +78,23 @@ jobs:
           esac
 
           new_version="$major.$minor.$patch"
-          echo "new_version=$new_version" >> $GITHUB_ENV
+          echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
         
       - name: Echo the new version
-        run: echo "The new version is ${{ env.new_version }}"
+        run: echo "The new version is ${{ env.NEW_VERSION }}"
 
       - name: Update the version in pom.xml
         working-directory: cicd-java
         run: |
-          mvn versions:set -DnewVersion= ${{ env.new_version }}
+          mvn versions:set -DnewVersion=${{ env.NEW_VERSION }} -X
       
-      - name: Check new version
-        working-directory: cicd-java
-        id: check_new
-        run: |
-          latest_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "latest_version=$latest_version" >> $GITHUB_ENV
-          echo "The latest version set in pom.xml is ${{ env.latest_version }}"
+      # - name: Check new version
+      #   working-directory: cicd-java
+      #   id: check_new
+      #   run: |
+      #     latest_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+      #     echo "latest_version=$latest_version" >> $GITHUB_ENV
+      #     echo "The latest version set in pom.xml is ${{ env.latest_version }}"
           
       # - name: Configure git
       #   working-directory: cicd-java
