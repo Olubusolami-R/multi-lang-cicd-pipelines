@@ -125,8 +125,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.TAG }}  # Use the current tag (e.g., v1.0.0)
-          release_name: Release ${{ env.TAG }}  # Customize release name
+          tag_name: ${{ env.TAG }}  
+          release_name: Release ${{ env.TAG }}
           body: |
             ## Changes
             - Release of ${{ env.TAG }}
