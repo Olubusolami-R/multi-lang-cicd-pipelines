@@ -224,7 +224,6 @@ jobs:
       - name: Build and Publish to GitHub Packages
         working-directory: cicd-js
         run: |
-          npm run build
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
