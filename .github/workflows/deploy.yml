@@ -167,7 +167,7 @@ jobs:
 
       - name: Increment Javascript version
         working-directory: cicd-js
-        id: increment_java_version
+        id: increment_js_version
         run: |
           version="${{ env.CURRENT_VERSION }}"
           IFS='.' read -r major minor patch <<< "$version" 
@@ -193,7 +193,7 @@ jobs:
       - name: Echo the new version
         run: echo "The new version is ${{ env.NEW_VERSION }}"
 
-      - name: Update the version in package.jsom
+      - name: Update the version in package.json
         working-directory: cicd-js
         run: |
           npm version $NEW_VERSION --no-git-tag-version 
@@ -223,15 +223,17 @@ jobs:
         
       - name: Build and Publish to GitHub Packages
         working-directory: cicd-js
-        run: npm publish
+        run: |
+          npm run build
+          npm publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Create GitHub release
         if: success()
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ env.TAG }}  
           release_name: Release ${{ env.TAG }}
