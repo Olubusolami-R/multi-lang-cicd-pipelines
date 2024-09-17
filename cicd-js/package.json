@@ -1,6 +1,6 @@
 {
   "name": "cicd_javascript",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "main": "Tester.js",
   "scripts": {
@@ -16,5 +16,4 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   }
-  
 }
