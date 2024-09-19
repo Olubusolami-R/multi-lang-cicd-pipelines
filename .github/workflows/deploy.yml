@@ -301,7 +301,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           echo "TAG=learn-go-v${{env.NEW_VERSION}}" >> $GITHUB_ENV
-          git tag -a learn-go-v${{env.NEW_VERSION}} -m "Latest release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
+          git tag -a learn-go-v${{env.NEW_VERSION}} -m "Latest release ${{ env.NEW_VERSION }} for ${{ github.event.inputs.language }}"
           git push origin learn-go-v${{env.NEW_VERSION}}
       
       - name: Create GitHub release
