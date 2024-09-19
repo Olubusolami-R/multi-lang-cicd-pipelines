@@ -268,4 +268,4 @@ jobs:
           echo "CURRENT_TAG=$current_tag" >> $GITHUB_ENV
       
       - name: Echo the current version
-        run: echo "The current version is ${{ env.CURRENT_TAG }}
+        run: echo "The current version is ${{ env.CURRENT_TAG }}"
