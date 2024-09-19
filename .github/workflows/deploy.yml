@@ -292,7 +292,28 @@ jobs:
 
           new_version="$major.$minor.$patch"
           echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
-          
+
       - name: Echo the new version
         run: echo "The new version is ${{ env.NEW_VERSION }}"
 
+      - name: Create new tag
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          echo "TAG=learn-go-v${{env.NEW_VERSION}}" >> $GITHUB_ENV
+          git tag -a learn-go-v${{env.NEW_VERSION}} -m "Latest release ${{ env.NEXT_VERSION }} for ${{ github.event.inputs.language }}"
+          git push origin learn-go-v${{env.NEW_VERSION}}
+      
+      - name: Create GitHub release
+        if: success()
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.TAG }}  
+          release_name: Release ${{ env.TAG }}
+          body: |
+            ## Changes
+            - Release of ${{ env.TAG }}
+          draft: false
+          prerelease: false
