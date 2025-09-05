@@ -1,6 +1,6 @@
 # CI/CD Practice Pipelines
 
-This repo is where I practised setting up GitHub Actions pipelines for different languages. The goal was simple: learn how to automate versioning, tagging, releases, and publishing for libraries in `Java`, `JavaScript`, and `Go`.
+This repo is where I practised setting up GitHub Actions pipelines for different languages. The goal was simple: learn how to automate versioning, tagging, releases, and publishing (all key parts of modern software delivery) for libraries in `Java`, `JavaScript`, and `Go`.
 
 ## What it does
 - It lets me pick a language (Java, JavaScript, Go) and version type (major, minor, patch) when triggering the workflow.
