@@ -16,6 +16,7 @@ I wanted to get comfortable with:
 - Automating semantic versioning
 - Publishing packages (Maven, npm, Go modules)
 - The overall flow of “code → version → release”
+And also improve my efficiency at work.
 
 ### Repo Structure
 ```bash
